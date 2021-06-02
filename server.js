@@ -48,5 +48,9 @@ app.get('/api/:date', (req, res) => {
   }
 })
 
+app.get('/api/:date?', (req, res) => {
+  res.json({query: req.query, params: req.params})
+})
+
 
 app.listen(8080, ()=> console.log('listening on 8080'))
