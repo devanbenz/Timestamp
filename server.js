@@ -48,9 +48,9 @@ app.get('/api/:date', (req, res) => {
   }
 })
 
-app.get('/api/:date?', (req, res) => {
-  res.json({query: req.query, params: req})
-})
+// app.get('/api/:date?', (req, res) => {
+//   res.json({query: req.query, params: req})
+// })
 
 
 app.listen(process.env.PORT , ()=> console.log(`listening on ${process.env.PORT}`))
