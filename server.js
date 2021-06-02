@@ -34,7 +34,8 @@ app.get('/api/', (req ,res) => {
 
 app.get('/api/:date', (req, res) => {
   const { date } = req.params
-  const time = new Date(Number(date)).toUTCString()
+  const uxTime = new Date(Number(date)).toUTCString()
+  const utcTime = new Date(date).toUTCString()
   //const time = Date.parse(date)
   // if(!time && valid == true){
   //   res.json({
@@ -48,7 +49,7 @@ app.get('/api/:date', (req, res) => {
   //     'utc': new Date(date).toUTCString()
   //   })
   // }
-  res.json({date:time})
+  res.json({'unix': uxTime, 'utc': utcTime})
 })
 
 // app.get('/api/:date?', (req, res) => {
