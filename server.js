@@ -45,7 +45,7 @@ app.get('/api/:date', (req, res) => {
   
   }else if(Number(date) >= 0){
     const utcTime = new Date(Number(date)).toUTCString()
-    res.status(200).json({'unix': date, 'utc': utcTime})
+    res.status(200).json({'unix': Number(date), 'utc': utcTime})
   
   }else{
     res.status({error: 'Invalid Date'})
