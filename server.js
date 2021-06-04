@@ -4,10 +4,12 @@
 // init project
 var express = require('express');
 var app = express();
-
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
 var cors = require('cors');
+
+
+
 app.use(cors({optionsSuccessStatus: 200}));  // some legacy browsers choke on 204
 
 // http://expressjs.com/en/starter/static-files.html
@@ -32,29 +34,22 @@ app.get('/api/', (req ,res) => {
   })
 })
 
+const matchDate = new RegExp('([0-9][0-9][0-9][0-9])-((0?[1-9])|(1[0-2]))-(0[1-9]$|1[0-9]$|2[0-9]$|3[0-1]$)')
+
 app.get('/api/:date', (req, res) => {
   const { date } = req.params
-  const uxTime = new Date(Number(date)).toUTCString()
-  const utcTime = new Date(date).toUTCString()
-  //const time = Date.parse(date)
-  // if(!time && valid == true){
-  //   res.json({
-  //     'unix':date*1,
-  //     'utc': new Date(Number(date)).toUTCString()
-  //   })
-  // }
-  // else{
-  //   res.json({
-  //     'unix':time, 
-  //     'utc': new Date(date).toUTCString()
-  //   })
-  // }
-  res.json({'unix': uxTime, 'utc': utcTime})
+  
+  if(matchDate.test(date)) {
+    const utcTime = new Date(date).toUTCString()
+    res.status(200).json({'unix': Date.parse(date),'utc': utcTime})
+  
+  }else if(Number(date) >= 0){
+    const utcTime = new Date(Number(date)).toUTCString()
+    res.status(200).json({'unix': date, 'utc': utcTime})
+  
+  }else{
+    res.status({error: 'Invalid Date'})
+  }
 })
 
-// app.get('/api/:date?', (req, res) => {
-//   res.json({query: req.query, params: req})
-// })
-
-
-app.listen(process.env.PORT , ()=> console.log(`listening on ${process.env.PORT}`))
+app.listen(process.env.PORT || 8080, ()=> console.log(`listening on ${process.env.PORT}`))
