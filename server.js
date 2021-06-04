@@ -38,17 +38,16 @@ const matchDate = new RegExp('([0-9][0-9][0-9][0-9])-((0?[1-9])|(1[0-2]))-(0[1-9
 
 app.get('/api/:date', (req, res) => {
   const { date } = req.params
-  
+  const utcTime = new Date(date).toUTCString()
+
   if(matchDate.test(date)) {
-    const utcTime = new Date(date).toUTCString()
     res.status(200).json({'unix': Date.parse(date),'utc': utcTime})
   
   }else if(Number(date) >= 0){
-    const utcTime = new Date(Number(date)).toUTCString()
-    res.status(200).json({'unix': Number(date), 'utc': utcTime})
+    const unixUtcTime = new Date(Number(date)).toUTCString()
+    res.status(200).json({'unix': Number(date), 'utc': unixUtcTime})
   
   }else{
-    const dateTest = new Date(date)
     res.status({error: 'Invalid Date'})
   }
 })
