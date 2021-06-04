@@ -48,6 +48,7 @@ app.get('/api/:date', (req, res) => {
     res.status(200).json({'unix': Number(date), 'utc': utcTime})
   
   }else{
+    const dateTest = new Date(date)
     res.status({error: 'Invalid Date'})
   }
 })
